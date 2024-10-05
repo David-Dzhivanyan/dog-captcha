@@ -60,7 +60,7 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
   useEffect(() => {
     const newOpacity = clickCount / (clickCountToComplete + 1);
     moneyRef.current!.style.opacity = `${newOpacity}`;
-  }, [clickCount]);
+  }, [clickCount, clickCountToComplete]);
 
   useEffect(() => {
     //Рандомная генерация ямы
@@ -79,7 +79,7 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
     }
 
     onReady();
-  }, []);
+  }, [onReady]);
 
   function onClick (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const target = e.target as HTMLImageElement;
@@ -223,6 +223,7 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
     }
   }
 
+  /* eslint-disable @next/next/no-img-element */
   return (
     <div ref={rootRef} className={s.root} onClick={onClick}>
       <Lottie className={s.cloud} animationData={cloud}/>

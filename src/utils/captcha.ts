@@ -1,6 +1,7 @@
 import {RefObject} from "react";
+import {LottieRef} from "lottie-react";
 
-export function onLottieComplete(lottieRef: any) {
+export function onLottieComplete(lottieRef: RefObject<HTMLDivElement>) {
   const completeEvent = new CustomEvent('complete', {
     bubbles: true,
   });
@@ -8,7 +9,7 @@ export function onLottieComplete(lottieRef: any) {
   lottieRef.current!.dispatchEvent(completeEvent);
 }
 
-export function  playAnimationWithPromise (lottieRef: any, parent: any): Promise<void>  {
+export function  playAnimationWithPromise (lottieRef: LottieRef, parent: RefObject<HTMLDivElement>): Promise<void>  {
   return new Promise((resolve) => {
     if (lottieRef.current) {
       const handleAnimationComplete = () => {
