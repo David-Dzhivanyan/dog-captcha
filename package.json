@@ -6,7 +6,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "build": "next build && xcopy .next public /E /I"
+    "build": "next build && cp -R .next public"
   },
   "dependencies": {
     "lottie-react": "^2.4.0",
