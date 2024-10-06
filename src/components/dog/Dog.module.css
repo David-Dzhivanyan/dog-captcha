@@ -7,57 +7,36 @@
   width: 50%;
 }
 
-.stay {
-
+.IDLE {
   height: 100%;
-  transform: translateY(-5%);
+  transform: translateY(-4.5%);
 }
 
-.run {
-
-  height: 52%;
-  transform: translateY(-5%);
+.MOVING {
+  height: 51%;
+  transform: translateY(-4.5%);
 }
 
-.dig {
-
-  height: 52%;
+.DIGGING {
+  height: 51%;
 }
 
-.blink {
-
-  height: 61.5%;
+.COMPLETED {
+  height: 60.5%;
 }
 
-.stay_run {
-
+.SITTING_DOWN {
+  transform: translateY(-2%);
 }
 
-.stay_dig {
-
+.STANDING_UP {
+  transform: translateY(-2%);
 }
 
-.run_stay {
-
+.SITTING_DIG {
+  transform: translateY(10.5%);
 }
 
-.stay,
-.run,
-.dig,
-.blink,
-.stay_run,
-.stay_dig,
-.run_stay,
-.dig_stay {
-  visibility: hidden;
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.visible {
-  visibility: visible;
-  position: static;
-  opacity: 1;
-  pointer-events: initial;
+.STANDING_DIG {
+  transform: translateY(10.5%);
 }

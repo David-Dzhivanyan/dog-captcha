@@ -33,6 +33,10 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   const [clickCoord, setClickCoord] = useState({ x: 0, y: 0 });
   const rootRef = useRef<HTMLDivElement>(null);
 
+  let handleAnimationComplete = () => {
+    console.log("Анимация завершена!");
+  };
+
   useEffect(() => {
     stateCaptcha.maxClicks = clickCountToComplete;
   }, [clickCountToComplete]);
@@ -64,10 +68,14 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         stateCaptcha.transition('reachCoin');
         setCurrentState('STANDING_UP');
         setDogPosition({...dogPosition, x: clickCoord.x - dogWidth/2}); // Собака подошла к монете
-        setTimeout(() => {
+        handleAnimationComplete = () => {
           stateCaptcha.transition('animationEnd');
           setCurrentState('IDLE');
-        }, 1000);
+        };
+        // setTimeout(() => {
+        //   stateCaptcha.transition('animationEnd');
+        //   setCurrentState('IDLE');
+        // }, 1000);
       }, 1000); // Время, за которое собака "дойдет" до монеты
     }
   }, [currentState, coinPosition]);
@@ -85,10 +93,14 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
 
     if (currentState === 'IDLE' && (!isNearCoin || (isNearCoin && target.id !== 'coin'))) {
       setCurrentState('SITTING_DOWN');
-      setTimeout(() => {
+      handleAnimationComplete = () => {
         stateCaptcha.transition('animationEnd');
         setCurrentState('MOVING');
-      }, 1000);
+      };
+      // setTimeout(() => {
+      //   stateCaptcha.transition('animationEnd');
+      //   setCurrentState('MOVING');
+      // }, 1000);
     } else if (currentState === 'IDLE' && isNearCoin && target.id === 'coin') {
       setCurrentState('SITTING_DIG');
       setTimeout(() => {
@@ -98,10 +110,14 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
           if (clickCount < clickCountToComplete - 1) {
             setClickCount(prev => prev + 1);
             setCurrentState('STANDING_DIG');
-            setTimeout(() => {
+            handleAnimationComplete = () => {
               stateCaptcha.transition('animationEnd');
               setCurrentState('IDLE');
-            }, 1000);
+            };
+            // setTimeout(() => {
+            //   stateCaptcha.transition('animationEnd');
+            //   setCurrentState('IDLE');
+            // }, 1000);
           } else {
             setCurrentState('COMPLETED');
           }
@@ -118,7 +134,13 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
     <div ref={rootRef} className={s.root} onClick={handleCoinClick}>
       <Lottie className={s.cloud} animationData={cloud}/>
       <Lottie className={s.gras} animationData={gras}/>
-      <Dog position={dogPosition} state={currentState} direction={dogDirection} width={dogWidth}/>
+      <Dog
+        position={dogPosition}
+        state={currentState}
+        direction={dogDirection}
+        width={dogWidth}
+        onAnimationComplete={handleAnimationComplete}
+      />
       <div className={s.hole} style={{left: `${holePosition.x}%`, bottom: `${holePosition.y}%`}}>
         <Hole/>
       </div>
