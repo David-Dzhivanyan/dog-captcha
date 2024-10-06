@@ -22,8 +22,10 @@ interface CaptchaProps {
 const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onComplete }) => {
   const [dogPosition, setDogPosition] = useState({ x: 0, y: 16.5 });
   const [dogDirection, setDogDirection] = useState(true);
+  const [dogWidth] = useState(50);
   const [coinPosition] = useState({ y: 42, x: 50 });
   const [pitPosition, setPitPosition] = useState({ x: 0, y: 0 });
+  const [pitWidth] = useState(20);
   const [holePosition, setHolePosition] = useState({ x: 0, y: 0 });
   const [currentState, setCurrentState] = useState<State>(stateCaptcha.currentState);
   const [isNearCoin, setIsNearCoin] = useState(false);
@@ -45,7 +47,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   }, [onReady]);
 
   useEffect(() => {
-    if (clickCoord.x < dogPosition.x + 25) {
+    if (clickCoord.x < dogPosition.x + dogWidth/2) {
       setDogDirection(false);
     } else {
       setDogDirection(true);
@@ -61,7 +63,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
       setTimeout(() => {
         stateCaptcha.transition('reachCoin');
         setCurrentState('STANDING_UP');
-        setDogPosition({...dogPosition, x: clickCoord.x - 25}); // Собака подошла к монете
+        setDogPosition({...dogPosition, x: clickCoord.x - dogWidth/2}); // Собака подошла к монете
         setTimeout(() => {
           stateCaptcha.transition('animationEnd');
           setCurrentState('IDLE');
@@ -109,14 +111,14 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   };
 
   function checkIsNearCoin(): boolean {
-    return Math.abs((pitPosition.x + 10) - (dogPosition.x + 25)) < 5;
+    return Math.abs((pitPosition.x + pitWidth/2) - (dogPosition.x + dogWidth/2)) < 5;
   }
 
   return (
     <div ref={rootRef} className={s.root} onClick={handleCoinClick}>
       <Lottie className={s.cloud} animationData={cloud}/>
       <Lottie className={s.gras} animationData={gras}/>
-      <Dog position={dogPosition} state={currentState} direction={dogDirection}/>
+      <Dog position={dogPosition} state={currentState} direction={dogDirection} width={dogWidth}/>
       <div className={s.hole} style={{left: `${holePosition.x}%`, bottom: `${holePosition.y}%`}}>
         <Hole/>
       </div>
@@ -126,7 +128,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         alt={'background'}
         srcSet={`${bg500x250.src} 500w, ${bg1000x500.src} 1000w, ${bg1500x750.src} 1500w`}
       />
-      <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`}}>
+      <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
         <Pit/>
         <Coin position={coinPosition} id='coin'/>
       </div>

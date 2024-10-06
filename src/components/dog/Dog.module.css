@@ -8,19 +8,56 @@
 }
 
 .stay {
+
   height: 100%;
   transform: translateY(-5%);
 }
 
 .run {
+
   height: 52%;
   transform: translateY(-5%);
 }
 
 .dig {
+
   height: 52%;
 }
 
 .blink {
+
   height: 61.5%;
+}
+
+.stay_run {
+
+}
+
+.stay_dig {
+
+}
+
+.run_stay {
+
+}
+
+.stay,
+.run,
+.dig,
+.blink,
+.stay_run,
+.stay_dig,
+.run_stay,
+.dig_stay {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  visibility: visible;
+  position: static;
+  opacity: 1;
+  pointer-events: initial;
 }
