@@ -65,7 +65,7 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
   useEffect(() => {
     //Рандомная генерация ямы
     if (pitRef.current) {
-      const pitPositionX = getRandomNumber(35, 70);
+      const pitPositionX = getRandomNumber(69, 70);
 
       pitRef.current.style.bottom = '5%';
       holeRef.current!.style.bottom = '27%';
@@ -81,12 +81,17 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
     onReady();
   }, [onReady]);
 
-  function onClick (e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    onClick(event, event.clientX);
+    console.log('handleClick')
+  }
+
+  function onClick (e: React.MouseEvent<HTMLDivElement, MouseEvent>|React.TouchEvent<HTMLDivElement>, clientX: number) {
     const target = e.target as HTMLImageElement;
     const parentRect = rootRef.current!.getBoundingClientRect();
     const pitPosition = getCoordsInParent(rootRef.current!, pitRef.current!);
     const stayPosition = getCoordsInParent(rootRef.current!, stayRef.current!);
-    let xClick = e.clientX - parentRect.left;
+    let xClick = clientX - parentRect.left;
 
     const direction = setDirection(stayPosition.xCenter, xClick);
 
@@ -225,7 +230,7 @@ const Captcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCompl
 
   /* eslint-disable @next/next/no-img-element */
   return (
-    <div ref={rootRef} className={s.root} onClick={onClick}>
+    <div ref={rootRef} className={s.root} onClick={handleClick}>
       <Lottie className={s.cloud} animationData={cloud}/>
       <Lottie className={s.gras} animationData={gras}/>
       <div ref={holeRef} className={s.hole}>

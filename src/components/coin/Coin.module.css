@@ -1,0 +1,18 @@
+.root {
+    cursor: pointer;
+    position: absolute;
+    width: 33%;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

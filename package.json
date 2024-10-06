@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "build": "next build && cp -R .next public"
+    "lint": "next lint"
   },
   "dependencies": {
     "lottie-react": "^2.4.0",

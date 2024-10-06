@@ -9,7 +9,7 @@ export function onLottieComplete(lottieRef: RefObject<HTMLDivElement>) {
   lottieRef.current!.dispatchEvent(completeEvent);
 }
 
-export function  playAnimationWithPromise (lottieRef: LottieRef, parent: RefObject<HTMLDivElement>): Promise<void>  {
+export function playAnimationWithPromise (lottieRef: LottieRef, parent: RefObject<HTMLDivElement>): Promise<void>  {
   return new Promise((resolve) => {
     if (lottieRef.current) {
       const handleAnimationComplete = () => {

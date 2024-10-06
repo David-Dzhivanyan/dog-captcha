@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import Captcha from "@/components/captcha/Captcha";
+import NewCaptcha from "@/components/newCaptcha/index";
 
 export default function Home() {
   const onReady = () => {
@@ -14,11 +14,7 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <Captcha
-        clickCountToComplete={3}
-        onReady={onReady}
-        onComplete={onComplete}
-      />
+      <NewCaptcha clickCountToComplete={3} onReady={onReady} onComplete={onComplete} />
     </div>
   );
 }
