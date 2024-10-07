@@ -9,7 +9,7 @@
 
 .IDLE {
   height: 100%;
-  transform: translateY(-5.5%);
+  margin-bottom: 2.23%;
 }
 
 .MOVING {
@@ -19,12 +19,11 @@
 
 .DIGGING {
   height: 50.5%;
-  transform: translateY(2%);
 }
 
 .COMPLETED {
   height: 60.5%;
-  transform: translateY(4%);
+  margin-bottom: -1%;
 }
 
 .SITTING_DOWN {
