@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import NewCaptcha from "@/components/newCaptcha/index";
+import NewCaptcha from "@/components/newCaptcha/NewCaptcha";
 
 export default function Home() {
   const onReady = () => {
@@ -9,7 +9,7 @@ export default function Home() {
   };
 
   const onComplete = () => {
-    console.log('onReady');
+    console.log('onComplete');
   };
 
   return (

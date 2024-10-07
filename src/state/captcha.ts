@@ -20,7 +20,6 @@ const stateCaptcha: StateCaptcha = {
       case 'IDLE':
         if (event === 'clickPlace' || !this.isNearCoin) {
           this.currentState = 'SITTING_DOWN';
-          console.log(this.isNearCoin, event);
         } else if (this.isNearCoin) {
           this.currentState = 'SITTING_DIG';
         }
@@ -28,14 +27,14 @@ const stateCaptcha: StateCaptcha = {
       case 'SITTING_DIG':
         if (event === 'animationEnd') {
           this.currentState = 'DIGGING';
-          setTimeout(() => {
-            if (this.clickCount < this.maxClicks - 1) {
-              this.clickCount++;
-              this.currentState = 'STANDING_DIG';
-            } else {
-              this.currentState = 'COMPLETED';
-            }
-          }, 1000);
+        }
+        break;
+      case 'DIGGING':
+        if (event === 'animationEndDig') {
+          this.clickCount++;
+          this.currentState = 'STANDING_DIG';
+        } else if (event === 'animationEndDig') {
+          this.currentState = 'COMPLETED';
         }
         break;
       case 'STANDING_DIG':
@@ -53,13 +52,12 @@ const stateCaptcha: StateCaptcha = {
           this.currentState = 'STANDING_UP';
         }
         break;
-      case 'STANDING_UP': // Состояние для анимации с четверенек в стоя
+      case 'STANDING_UP':
         if (event === 'animationEnd') {
           this.currentState = 'IDLE';
         }
         break;
       case 'COMPLETED':
-        console.log('Монета откопана! Игра завершена.');
         break;
       default:
         break;

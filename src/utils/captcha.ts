@@ -1,5 +1,5 @@
 import {RefObject} from "react";
-import {LottieRef} from "lottie-react";
+import {LottieRefCurrentProps} from "lottie-react";
 
 export function onLottieComplete(lottieRef: RefObject<HTMLDivElement>) {
   const completeEvent = new CustomEvent('complete', {
@@ -9,17 +9,19 @@ export function onLottieComplete(lottieRef: RefObject<HTMLDivElement>) {
   lottieRef.current!.dispatchEvent(completeEvent);
 }
 
-export function playAnimationWithPromise (lottieRef: LottieRef, parent: RefObject<HTMLDivElement>): Promise<void>  {
+export function playAnimationWithPromise (lottieRef: LottieRefCurrentProps, parent: HTMLDivElement): Promise<void>  {
   return new Promise((resolve) => {
-    if (lottieRef.current) {
+    if (lottieRef) {
       const handleAnimationComplete = () => {
         resolve();
-        parent.current!.removeEventListener('complete', handleAnimationComplete);
+        parent.removeEventListener('complete', handleAnimationComplete);
       };
 
-      parent.current!.addEventListener('complete', handleAnimationComplete);
+      parent.removeEventListener('complete', handleAnimationComplete);
 
-      lottieRef.current.goToAndPlay(0, false);
+      parent.addEventListener('complete', handleAnimationComplete);
+
+      lottieRef.goToAndPlay(0, false);
     }
   });
 }

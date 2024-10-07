@@ -24,14 +24,19 @@ const Dog: React.FC<DogProps> = ({ position, state, direction = true, width = 50
   const [currentAnimation, setCurrentAnimation] = useState<LottieComponentProps['animationData']>(null);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const [loop, setLoop] = useState(false);
 
   useEffect(() => {
+    setLoop(false);
+
     switch (state) {
       case "IDLE":
         setCurrentAnimation(stay);
+        setLoop(true);
         break;
       case "MOVING":
         setCurrentAnimation(run);
+        setLoop(true);
         break;
       case "DIGGING":
         setCurrentAnimation(dig);
@@ -55,16 +60,19 @@ const Dog: React.FC<DogProps> = ({ position, state, direction = true, width = 50
   }, [state]);
 
   useEffect(() => {
-    if (lottieRef.current && currentAnimation) {
-      handlePlayAnimation();
+    if (lottieRef.current && currentAnimation && !loop) {
+      if (lottieRef.current.animationItem !== currentAnimation) {
+        lottieRef.current.stop();
+        setTimeout(() => {
+          handlePlayAnimation();
+        }, 100);
+      }
     }
   }, [currentAnimation]);
 
   const handlePlayAnimation = async () => {
     try {
-      console.log('start')
-      await playAnimationWithPromise(lottieRef, rootRef);
-      console.log('end')
+      await playAnimationWithPromise(lottieRef.current!, rootRef.current!);
       onAnimationComplete();
     } catch (error) {
       console.error("Ошибка анимации:", error);
@@ -80,8 +88,9 @@ const Dog: React.FC<DogProps> = ({ position, state, direction = true, width = 50
       <Lottie
         lottieRef={lottieRef}
         animationData={currentAnimation}
-        loop={false}
+        loop={loop}
         className={s[state]}
+        autoplay={true}
         onComplete={() => onLottieComplete(rootRef)}
       />
     </div>
