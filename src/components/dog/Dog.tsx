@@ -25,6 +25,11 @@ const Dog: React.FC<DogProps> = ({ position, state, direction, width = 50, onAni
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [loop, setLoop] = useState(false);
+  const [className, setClassName] = useState(s[state]);
+
+  useEffect(() => {
+    setClassName(s[state]);
+  }, [state]);
 
   useEffect(() => {
     setLoop(false);
@@ -89,7 +94,7 @@ const Dog: React.FC<DogProps> = ({ position, state, direction, width = 50, onAni
         lottieRef={lottieRef}
         animationData={currentAnimation}
         loop={loop}
-        className={s[state]}
+        className={className}
         autoplay={true}
         onComplete={() => onLottieComplete(rootRef)}
       />
