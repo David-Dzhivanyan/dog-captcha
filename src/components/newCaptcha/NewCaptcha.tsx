@@ -1,3 +1,5 @@
+'use client';
+
 import React, {useEffect, useRef, useState} from 'react';
 import stateCaptcha, {State} from '@/state/captcha';
 import Dog from "@/components/dog/Dog";
@@ -21,7 +23,7 @@ interface CaptchaProps {
 
 const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onComplete }) => {
   const [dogPosition, setDogPosition] = useState({ x: 0, y: 16.5 });
-  const [dogDirection, setDogDirection] = useState(true);
+  const [dogDirection, setDogDirection] = useState(false);
   const [dogWidth] = useState(50);
   const [coinPosition] = useState({ y: 42, x: 50 });
   const [pitPosition, setPitPosition] = useState({ x: 0, y: 0 });
@@ -46,8 +48,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
 
   useEffect(() => {
     const pitPos = {y: 5, x: getRandomNumber(25, 70)} ;
-    const holePos = {y: 27, x: pitPos.x - 1.7} ;
-
+    const holePos = {y: 27, x: pitPos.x - 1.7};
     setPitPosition({...pitPos});
     setHolePosition({...holePos});
     onReady();
@@ -55,7 +56,11 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
 
   useEffect(() => {
     if (clickCoord.x < dogPosition.x + dogWidth/2 || (checkIsNearCoin() && isClickCoin)) {
-      setDogDirection(false);
+      if (clickCoord.x === 0 && clickCoord.y === 0) {
+        setDogDirection(true);
+      } else {
+        setDogDirection(false);
+      }
     } else {
       setDogDirection(true);
     }
@@ -70,7 +75,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   useEffect(() => {
     const performDogMove = async () => {
       if (isClickCoin) {
-        await dogMoving({...dogPosition, x: pitPosition.x + pitWidth * coinPosition.x / 100});
+        await dogMoving({...dogPosition, x: (pitPosition.x + pitWidth * coinPosition.x / 100) - 1});
       } else {
         await dogMoving({...dogPosition, x: clickCoord.x});
       }
@@ -173,6 +178,9 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
     <div ref={rootRef} className={s.root} onClick={handleCoinClick}>
       <Lottie className={s.cloud} animationData={cloud}/>
       <Lottie className={s.gras} animationData={gras}/>
+      <div className={s.hole} style={{left: `${holePosition.x}%`, bottom: `${holePosition.y}%`, visibility: `${clickCount > 0 ? 'visible' : 'hidden'}`}}>
+        <Hole/>
+      </div>
       <Dog
         position={dogPosition}
         state={currentState}
@@ -180,9 +188,6 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         width={dogWidth}
         onAnimationComplete={() => handleAnimationCompleteRef.current()}
       />
-      <div className={s.hole} style={{left: `${holePosition.x}%`, bottom: `${holePosition.y}%`}}>
-        <Hole/>
-      </div>
       <img
         className={s.background}
         src={bg500x250.src}

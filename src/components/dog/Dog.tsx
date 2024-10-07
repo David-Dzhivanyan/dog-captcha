@@ -20,7 +20,7 @@ interface DogProps {
   onAnimationComplete: () => void;
 }
 
-const Dog: React.FC<DogProps> = ({ position, state, direction = true, width = 50, onAnimationComplete }) => {
+const Dog: React.FC<DogProps> = ({ position, state, direction, width = 50, onAnimationComplete }) => {
   const [currentAnimation, setCurrentAnimation] = useState<LottieComponentProps['animationData']>(null);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const rootRef = useRef<HTMLDivElement>(null);

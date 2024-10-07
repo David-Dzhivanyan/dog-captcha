@@ -24,63 +24,9 @@
 }
 
 .hole {
-  /*visibility: hidden;*/
+  visibility: hidden;
   position: absolute;
   bottom: 32%;
   left: 0;
   width: 8.5%;
-}
-
-.run {
-  visibility: hidden;
-  position: absolute;
-  top: 39.5%;
-  left: 12.5%;
-  height: 25%;
-}
-
-.digging {
-  visibility: hidden;
-  position: absolute;
-  top: 41.5%;
-  height: 25%;
-}
-
-.blink {
-  visibility: hidden;
-  position: absolute;
-  top: 37.8%;
-  height: 29.4%;
-}
-
-.stay,
-.runStay,
-.stayRun,
-.diggingStay,
-.diggingStaySmile,
-.stayDigging {
-  visibility: visible;
-  position: absolute;
-  top: 14.5%;
-  left: 0;
-  height: 48.5%;
-}
-
-.runStay,
-.stayRun,
-.diggingStay,
-.diggingStaySmile,
-.stayDigging {
-  visibility: hidden;
-}
-
-.diggingStay,
-.diggingStaySmile,
-.stayDigging {
-  height: 65%;
-  top: 6.3%;
-}
-
-.lottie {
-  height: 100%;
 }
