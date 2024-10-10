@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import stateCaptcha, {State} from '@/state/captcha';
 import Dog from "@/components/dog/Dog";
 import Coin from "@/components/coin/Coin";
@@ -37,6 +37,9 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   const [isClickCoin, setIsClickCoin] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const handleAnimationCompleteRef = useRef(() => {});
+  const checkIsNearCoin = useCallback((): boolean => {
+    return Math.abs(((pitPosition.x + (pitWidth * coinPosition.x) / 100) - 1) - (dogPosition.x + dogWidth / 2)) < 2;
+  }, [pitPosition.x, pitWidth, coinPosition.x, dogPosition.x, dogWidth]);
 
   useEffect(() => {
     stateCaptcha.maxClicks = clickCountToComplete;
@@ -44,11 +47,11 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
 
   useEffect(() => {
     setCoinOpacity((clickCount + 1) / (clickCountToComplete + 1));
-  }, [clickCount]);
+  }, [clickCount, clickCountToComplete]);
 
   useEffect(() => {
     const pitPos = {y: 5, x: getRandomNumber(25, 70)} ;
-    const holePos = {y: 27, x: pitPos.x - 1.7};
+    const holePos = {y: 26, x: pitPos.x - 1.7};
     setPitPosition({...pitPos});
     setHolePosition({...holePos});
     onReady();
@@ -64,13 +67,13 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
     } else {
       setDogDirection(true);
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickCoord]);
 
   useEffect(() => {
     setIsNearCoin(checkIsNearCoin());
     stateCaptcha.isNearCoin = checkIsNearCoin();
-  }, [dogPosition]);
+  }, [checkIsNearCoin, dogPosition]);
 
   useEffect(() => {
     const performDogMove = async () => {
@@ -108,6 +111,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentState, coinPosition]);
 
   const handleCoinClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -139,10 +143,6 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
       };
     }
   };
-
-  function checkIsNearCoin(): boolean {
-    return Math.abs((pitPosition.x + pitWidth/2) - (dogPosition.x + dogWidth/2)) < 5;
-  }
 
   const dogMoving = (end: { x: number, y: number }): Promise<void>  => {
     return new Promise((resolve) => {
@@ -188,16 +188,21 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         width={dogWidth}
         onAnimationComplete={() => handleAnimationCompleteRef.current()}
       />
+      {/* eslint-disable-next-line @next/next/no-img-element*/}
       <img
         className={s.background}
         src={bg500x250.src}
         alt={'background'}
         srcSet={`${bg500x250.src} 500w, ${bg1000x500.src} 1000w, ${bg1500x750.src} 1500w`}
       />
-      <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
-        <Pit/>
-        <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
-      </div>
+      {dogDirection &&
+        <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
+          <Pit/>
+          <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
+        </div>
+      }
+
+
     </div>
   );
 };
