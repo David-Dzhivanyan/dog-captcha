@@ -14,8 +14,7 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      {/*<div style={{maxWidth:500, maxHeight: 250}}>*/}
-      <div>
+      <div style={{maxWidth:500, maxHeight: 250, margin: '0 auto'}}>
         <NewCaptcha clickCountToComplete={3} onReady={onReady} onComplete={onComplete} />
       </div>
     </div>
