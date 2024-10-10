@@ -26,7 +26,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   const [dogDirection, setDogDirection] = useState(false);
   const [dogWidth] = useState(50);
   const [coinPosition] = useState({ y: 42, x: 50 });
-  const [pitPosition, setPitPosition] = useState({ x: 0, y: 0 });
+  const [pitPosition, setPitPosition] = useState({ x: -100, y: 0 });
   const [pitWidth] = useState(20);
   const [holePosition, setHolePosition] = useState({ x: 0, y: 0 });
   const [currentState, setCurrentState] = useState<State>(stateCaptcha.currentState);
@@ -195,14 +195,10 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         alt={'background'}
         srcSet={`${bg500x250.src} 500w, ${bg1000x500.src} 1000w, ${bg1500x750.src} 1500w`}
       />
-      {dogDirection &&
-        <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
-          <Pit/>
-          <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
-        </div>
-      }
-
-
+      <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
+        <Pit/>
+        <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
+      </div>
     </div>
   );
 };
