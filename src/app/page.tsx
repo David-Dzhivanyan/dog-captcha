@@ -14,7 +14,10 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <NewCaptcha clickCountToComplete={3} onReady={onReady} onComplete={onComplete} />
+      {/*<div style={{maxWidth:500, maxHeight: 250}}>*/}
+      <div>
+        <NewCaptcha clickCountToComplete={3} onReady={onReady} onComplete={onComplete} />
+      </div>
     </div>
   );
 }

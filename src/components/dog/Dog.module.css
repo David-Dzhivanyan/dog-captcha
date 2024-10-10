@@ -9,36 +9,40 @@
 
 .IDLE {
   height: 100%;
-  margin-bottom: 2.5%;
+  margin-bottom: 3.6%;
 }
 
 .MOVING {
-  height: 51%;
-  transform: translateY(-4.5%);
+  height: 52%;
+  transform: translateY(-7.5%);
 }
 
 .DIGGING {
   height: 50.5%;
-  transform: translateY(1%);
+  transform: translateY(-1%);
 }
 
 .COMPLETED {
   height: 60.5%;
-  margin-bottom: -1%;
+  transform: translateY(-1%);
 }
 
 .SITTING_DOWN {
-  transform: translateY(-2%);
+  height: 100%;
+  transform: translateY(-7%);
 }
 
 .STANDING_UP {
-  transform: translateY(-2%);
+  height: 100%;
+  transform: translateY(-7%);
 }
 
 .SITTING_DIG {
-  transform: translateY(11.5%);
+  height: 135%;
+  transform: translateY(7.5%);
 }
 
 .STANDING_DIG {
-  transform: translateY(11.5%);
+  height: 135%;
+  transform: translateY(7.5%);
 }

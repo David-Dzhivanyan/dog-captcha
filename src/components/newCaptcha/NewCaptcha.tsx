@@ -51,7 +51,7 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
 
   useEffect(() => {
     const pitPos = {y: 5, x: getRandomNumber(25, 70)} ;
-    const holePos = {y: 26, x: pitPos.x - 1.7};
+    const holePos = {y: 28, x: pitPos.x - 1.7};
     setPitPosition({...pitPos});
     setHolePosition({...holePos});
     onReady();
@@ -178,16 +178,6 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
     <div ref={rootRef} className={s.root} onClick={handleCoinClick}>
       <Lottie className={s.cloud} animationData={cloud}/>
       <Lottie className={s.gras} animationData={gras}/>
-      <div className={s.hole} style={{left: `${holePosition.x}%`, bottom: `${holePosition.y}%`, visibility: `${clickCount > 0 ? 'visible' : 'hidden'}`}}>
-        <Hole/>
-      </div>
-      <Dog
-        position={dogPosition}
-        state={currentState}
-        direction={dogDirection}
-        width={dogWidth}
-        onAnimationComplete={() => handleAnimationCompleteRef.current()}
-      />
       {/* eslint-disable-next-line @next/next/no-img-element*/}
       <img
         className={s.background}
@@ -199,6 +189,20 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         <Pit/>
         <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
       </div>
+      <div className={s.hole} style={{
+        left: `${holePosition.x}%`,
+        bottom: `${holePosition.y}%`,
+        visibility: `${clickCount > 0 ? 'visible' : 'hidden'}`
+      }}>
+        <Hole/>
+      </div>
+      <Dog
+        position={dogPosition}
+        state={currentState}
+        direction={dogDirection}
+        width={dogWidth}
+        onAnimationComplete={() => handleAnimationCompleteRef.current()}
+      />
     </div>
   );
 };
