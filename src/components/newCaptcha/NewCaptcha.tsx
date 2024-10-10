@@ -50,8 +50,8 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
   }, [clickCount, clickCountToComplete]);
 
   useEffect(() => {
-    const pitPos = {y: 5, x: getRandomNumber(25, 70)} ;
-    const holePos = {y: 28, x: pitPos.x - 1.7};
+    const pitPos = {y: 65, x: getRandomNumber(25, 70)} ;
+    const holePos = {y: 54.5, x: pitPos.x - 1.7};
     setPitPosition({...pitPos});
     setHolePosition({...holePos});
     onReady();
@@ -185,13 +185,13 @@ const NewCaptcha: React.FC<CaptchaProps> = ({clickCountToComplete, onReady, onCo
         alt={'background'}
         srcSet={`${bg500x250.src} 500w, ${bg1000x500.src} 1000w, ${bg1500x750.src} 1500w`}
       />
-      <div className={s.pit} style={{left: `${pitPosition.x}%`, bottom: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
+      <div className={s.pit} style={{left: `${pitPosition.x}%`, top: `${pitPosition.y}%`, width: `${pitWidth}%`}}>
         <Pit/>
         <Coin position={coinPosition} id='coin' style={{opacity: `${coinOpacity}`}}/>
       </div>
       <div className={s.hole} style={{
         left: `${holePosition.x}%`,
-        bottom: `${holePosition.y}%`,
+        top: `${holePosition.y}%`,
         visibility: `${clickCount > 0 ? 'visible' : 'hidden'}`
       }}>
         <Hole/>

@@ -23,8 +23,8 @@
 }
 
 .COMPLETED {
-  height: 60.5%;
-  transform: translateY(-1%);
+  height: 60%;
+  transform: translateY(0.9%);
 }
 
 .SITTING_DOWN {
